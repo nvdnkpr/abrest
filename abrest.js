@@ -19,9 +19,7 @@
                 return result
             }
         },
-        noop = function () {
-            // Does nothing. Used for when the callback supplied is empty.
-        }
+        noop = function () {}
 
     abrest.prototype.timeout = 1000
     abrest.prototype.baseURL = ''
@@ -54,7 +52,7 @@
         }
 
         if (this.timeout) {
-            var tid = setTimeout(function () {
+            tid = setTimeout(function () {
                 xhr.abort()
                 callback(new Error('Timeout'))
             }, this.timeout)
