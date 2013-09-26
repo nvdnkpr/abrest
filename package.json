@@ -1,0 +1,28 @@
+{
+    "name": "abrest",
+    "description": "Abstraction for dealing with RESTful services so that your client side can be abreast of your server side",
+    "version": "0.1.0",
+    "contributors": [
+        "James Costian <james@jamescostian.com> (http://jamescostian.com)"
+    ],
+    "homepage": "http://jamescostian.github.io/abrest",
+    "main": "./abrest.js",
+    "dependencies": {
+        "grunt": "0.4.x",
+        "grunt-contrib-uglify": "0.2.x"
+    },
+    "devDependencies": {
+        "grunt-contrib-jshint": "0.6.x",
+        "grunt-mocha-phantomjs": "0.3.x",
+        "mocha": "1.12.x",
+        "chai": "1.7.x"
+    },
+    "scripts": {
+        "test": "grunt test"
+    },
+    "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/jamescostian/abrest.git"
+    }
+}
