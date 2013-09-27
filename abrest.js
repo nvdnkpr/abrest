@@ -15,8 +15,8 @@
         var xhr = new XMLHttpRequest(),
             timer
 
-        data = this.encode(this.combineArrays(this.defaultData, data))
-        headers = this.combineArrays(this.defaultHeaders, headers)
+        data = this.encode(this.combineObjs(this.defaultData, data))
+        headers = this.combineObjs(this.defaultHeaders, headers)
 
         url = this.baseURL + url
         callback = callback || noop
@@ -63,7 +63,7 @@
         }
     }
 
-    Abrest.prototype.combineArrays = function (defaults, overrides) {
+    Abrest.prototype.combineObjs = function (defaults, overrides) {
         for (var i in this.defaultData) {
             if (defaults.hasOwnProperty(i) && typeof overrides[i] === 'undefined') {
                 overrides[i] = defaults[i]
