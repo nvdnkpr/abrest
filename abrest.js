@@ -1,5 +1,5 @@
 (function (scope) {
-    var abrest = function (baseURL, defaultHeaders, defaultData, timeout) {
+    var Abrest = function (baseURL, defaultHeaders, defaultData, timeout) {
             var api = this
 
             api.baseURL = baseURL || ''
@@ -9,7 +9,7 @@
 
             return api
         },
-        encodeURI = function (data) {
+        encode = function (data) {
             var result = ''
 
             if (typeof data === 'string') {
@@ -26,14 +26,15 @@
         },
         noop = function () {}
 
-    abrest.prototype.ajax = function (method, url, data, callback) {
+    Abrest.prototype.ajax = function (method, url, data, headers, callback) {
         var xhr = new XMLHttpRequest(),
-            payload = encodeURI(data),
             sentContentType = false,
+            payload,
             tid
 
         url = this.baseURL + url
         data = data || {}
+        payload = encode(data)
         callback = callback || noop
 
         if (method === 'GET' && payload) {
@@ -84,10 +85,10 @@
 
     if (typeof define === 'function' && define.amd) {
         define(function () {
-            return abrest
+            return Abrest
         })
     }
     else {
-        scope.abrest = abrest
+        scope.Abrest = Abrest
     }
 }(this))
