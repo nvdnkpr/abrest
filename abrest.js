@@ -28,7 +28,6 @@
 
     Abrest.prototype.ajax = function (method, url, data, headers, callback) {
         var xhr = new XMLHttpRequest(),
-            sentContentType = false,
             payload,
             tid
 
@@ -42,16 +41,16 @@
         }
 
         xhr.open(method, url)
-        for (var h in headers) {
-            if (headers.hasOwnProperty(h)) {
-                xhr.setRequestHeader(h, headers[h])
-                if (h.toLowerCase() === 'content-type') {
-                    sentContentType = true
-                }
+        xhr.setRequestHeader('content-type', 'application/x-www-form-urlencoded')
+        for (var defaultHeader in this.defaultHeaders) {
+            if (this.defaultHeaders.hasOwnProperty(defaultHeader)) {
+                xhr.setRequestHeader(defaultHeader, this.defaultHeaders[defaultHeader])
             }
         }
-        if (!sentContentType) {
-            xhr.setRequestHeader('content-type', 'application/x-www-form-urlencoded')
+        for (var header in headers) {
+            if (headers.hasOwnProperty(header)) {
+                xhr.setRequestHeader(header, headers[header])
+            }
         }
 
         if (this.timeout) {
