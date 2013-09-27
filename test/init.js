@@ -9,7 +9,7 @@ describe('abrest', function() {
 })
 
 
-if (window.mochaPhantomJS) {
+if (typeof window.mochaPhantomJS !== 'undefined') {
     mochaPhantomJS.run()
 }
 else {
