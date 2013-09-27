@@ -1,6 +1,11 @@
 (function (scope) {
-    var abrest = function () {
+    var abrest = function (baseURL, defaultHeaders, defaultData, timeout) {
             var api = this
+
+            api.baseURL = baseURL || ''
+            api.timeout = timeout || 1000
+            api.defaultHeaders = defaultHeaders || {}
+            api.defaultData = defaultData || {}
 
             return api
         },
@@ -20,9 +25,6 @@
             }
         },
         noop = function () {}
-
-    abrest.prototype.timeout = 1000
-    abrest.prototype.baseURL = ''
 
     abrest.prototype.ajax = function (method, url, data, callback) {
         var xhr = new XMLHttpRequest(),
