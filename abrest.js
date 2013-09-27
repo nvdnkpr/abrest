@@ -9,21 +9,6 @@
 
             return api
         },
-        encode = function (data) {
-            var result = ''
-
-            if (typeof data === 'string') {
-                return data
-            }
-            else {
-                for (var k in data) {
-                    if (data.hasOwnProperty(k)) {
-                        result += '&' + encodeURIComponent(k) + '=' + encodeURIComponent(data[k])
-                    }
-                }
-                return result
-            }
-        },
         noop = function () {}
 
     Abrest.prototype.ajax = function (method, url, data, headers, callback) {
@@ -33,7 +18,7 @@
 
         url = this.baseURL + url
         data = data || {}
-        payload = encode(data)
+        payload = this.encode(data)
         callback = callback || noop
 
         if (method === 'GET' && payload) {
@@ -82,6 +67,25 @@
         }
     }
 
+    Abrest.prototype.encode = function (data) {
+        var result = ''
+
+        if (typeof data === 'string') {
+            return data
+        }
+        else {
+            for (var k in data) {
+                if (data.hasOwnProperty(k)) {
+                    result += '&' + encodeURIComponent(k) + '=' + encodeURIComponent(data[k])
+                }
+            }
+            return result
+        }
+    }
+
+    // OK, now Abrest is done. Time to attach it!
+    // If there is an AMD module system here, use it.
+    // Otherwise, add it to the 'this' variable (which is probably 'window')
     if (typeof define === 'function' && define.amd) {
         define(function () {
             return Abrest
