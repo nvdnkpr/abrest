@@ -3,8 +3,8 @@ mocha.reporter('html')
 expect = chai.expect
 
 describe('abrest', function() {
-    it('', function () {
-        expect(true).to.equal(true)
+    it('should be attached to the global scope by default', function () {
+        expect(abrest).to.not.be.undefined
     })
 })
 
