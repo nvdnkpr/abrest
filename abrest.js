@@ -13,25 +13,21 @@
 
     Abrest.prototype.ajax = function (method, url, data, headers, callback) {
         var xhr = new XMLHttpRequest(),
-            payload,
             timer
 
+        data = this.encode(this.combineArrays(this.defaultData, data))
+        headers = this.combineArrays(this.defaultHeaders, headers)
+
         url = this.baseURL + url
-        data = data || {}
-        payload = this.encode(data)
         callback = callback || noop
 
-        if (method === 'GET' && payload) {
-            url += '?' + payload
+        if (method === 'GET' && data) {
+            url += '?' + data
         }
 
         xhr.open(method, url)
+        // This is just a default header
         xhr.setRequestHeader('content-type', 'application/x-www-form-urlencoded')
-        for (var defaultHeader in this.defaultHeaders) {
-            if (this.defaultHeaders.hasOwnProperty(defaultHeader)) {
-                xhr.setRequestHeader(defaultHeader, this.defaultHeaders[defaultHeader])
-            }
-        }
         for (var header in headers) {
             if (headers.hasOwnProperty(header)) {
                 xhr.setRequestHeader(header, headers[header])
@@ -62,9 +58,19 @@
             }
         }
 
-        if (method !== 'GET' && payload) {
-            xhr.send(payload)
+        if (method !== 'GET' && data) {
+            xhr.send(data)
         }
+    }
+
+    Abrest.prototype.combineArrays = function (defaults, overrides) {
+        for (var i in this.defaultData) {
+            if (defaults.hasOwnProperty(i) && typeof overrides[i] === 'undefined') {
+                overrides[i] = defaults[i]
+            }
+        }
+
+        return overrides
     }
 
     Abrest.prototype.encode = function (data) {
