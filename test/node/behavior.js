@@ -1,4 +1,7 @@
 describe('basic behavior tests', function () {
+    it('should not be undefined', function () {
+        expect(Abrest).to.not.be.undefined
+    })
     it('should use defaults when no info is given', function () {
         var instance = new Abrest()
         expect(instance).to.not.be.undefined
