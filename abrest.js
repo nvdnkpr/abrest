@@ -14,10 +14,11 @@
     Abrest.prototype.ajax = function (method, url, data, headers, callback) {
         var xhr = new XMLHttpRequest(),
             timeout = this.timeout,
+            combineObjs = this.combineObjs,
             timer
 
-        data = this.encode(this.combineObjs(this.defaultData, data))
-        headers = this.combineObjs(this.defaultHeaders, headers)
+        data = this.encode(combineObjs(this.defaultData, data))
+        headers = combineObjs(this.defaultHeaders, headers)
 
         url = this.baseURL + url
         callback = callback || noop
@@ -51,7 +52,7 @@
                     callback(new Error('No Status'))
                 }
                 else if ((xhr.status < 200 || xhr.status >= 300) && xhr.status !== 304) {
-                    callback(new Error('HTTP Status Code ' + xhr.status))
+                    callback(new Error(xhr.status))
                 }
                 else {
                     callback(null, xhr.responseText)
