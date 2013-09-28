@@ -2,7 +2,7 @@
 
 **Ab**straction for dealing with **REST**ful services so your can always be *abreast*.
 
-Abrest works on both the client and the server side (assuming your server side is running Node.JS).
+Abrest works on both the client and the server side (assuming your server side is running Node.JS). If you have any AMD setup (e.g. RequireJS or Almond), Abrest will use that. Otherwise, Abrest will just attach itself to the `this` variable (which is usually going to be `window`).
 
 ## Installation
 To install Abrest for your client side, you can run `bower install abrest` and to install it for your server-side (assuming you're using Node.JS) you can run `npm install abrest`
