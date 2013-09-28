@@ -1,7 +1,7 @@
 {
     "name": "abrest",
     "description": "Abstraction for dealing with RESTful services so your can always be abreast",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "contributors": [
         "James Costian <james@jamescostian.com> (http://jamescostian.com)"
     ],
