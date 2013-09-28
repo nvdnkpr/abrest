@@ -1,9 +1,9 @@
-(function (scope, euc, hasOwnProperty) {
+(function (scope, euc, hasOwnProperty, defaultHeaders, defaultData) {
     var Abrest = function (baseURL, defaultHeaders, defaultData, timeout) {
             this.baseURL = baseURL || ''
             this.timeout = timeout || 1000
-            this.defaultHeaders = defaultHeaders || {}
-            this.defaultData = defaultData || {}
+            this[defaultHeaders] = defaultHeaders || {}
+            this[defaultData] = defaultData || {}
         },
         noop = function () {},
         methods = ['get', 'post', 'put', 'delete']
@@ -15,8 +15,8 @@
             combineObjs = this.combineObjs,
             timer
 
-        data = this.encode(combineObjs(this.defaultData, data))
-        headers = combineObjs(this.defaultHeaders, headers)
+        data = this.encode(combineObjs(this[defaultData], data))
+        headers = combineObjs(this[defaultHeaders], headers)
 
         url = this.baseURL + url
 
@@ -124,4 +124,4 @@
     else {
         scope.Abrest = Abrest
     }
-}(this, encodeURIComponent, 'hasOwnProperty'))
+}(this, encodeURIComponent, 'hasOwnProperty', 'defaultHeaders', 'defaultData'))
