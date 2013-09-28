@@ -5,7 +5,7 @@ module.exports = function(grunt) {
             options: {
                 jshintrc: '.jshintrc'
             },
-            files: 'abrest.js'
+            files: ['abrest.js', 'test/**/*.js', 'Gruntfile.js', 'package.json']
         },
         uglify: {
             options: {
