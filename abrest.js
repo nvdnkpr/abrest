@@ -1,4 +1,4 @@
-(function (scope) {
+(function (scope, euc) {
     var Abrest = function (baseURL, defaultHeaders, defaultData, timeout) {
             var api = this
 
@@ -82,7 +82,7 @@
         else {
             for (var k in data) {
                 if (data.hasOwnProperty(k)) {
-                    result += '&' + encodeURIComponent(k) + '=' + encodeURIComponent(data[k])
+                    result += '&' + euc(k) + '=' + euc(data[k])
                 }
             }
             return result.length === 0 ? '' : result.substr(1)
@@ -100,4 +100,4 @@
     else {
         scope.Abrest = Abrest
     }
-}(this))
+}(this, encodeURIComponent))
