@@ -41,3 +41,31 @@ user.delete('favorite_color', {foo: 'bar'}, function (error, result) {
 })
 // And also Abrest (should) support POST and PUT
 ```
+
+## Advanced Options
+When you create an instance of Abrest, you can modify some of that instance's properties. Here's an example:
+```javascript
+var user = new Abrest() // Creates a new instance of Abrest
+
+// Sets the request timeout to 0, which means that it will never timeout.
+// The default timeout is 1000 (which is 1 second).
+user.timeout = 0
+
+// Sets the default headers to {foo: 'bar'}. So, if a request is sent without
+// any headers, then Abrest will still send the header 'foo: bar'. In order to
+// override this header, one must send a request with a header that
+// specifically sets 'foo' to something else.
+user.defaultHeaders = {foo: 'bar'}
+
+// Sets the default data to {foo: 'bar'}. So, if a request is sent without
+// any data, then Abrest will still send the data 'foo=bar'. In order to
+// override this data, one must send a request with a data that specifically
+// sets 'foo' to something else.
+user.defaultData = {foo: 'bar'}
+```
+
+## Side Note for Client-Side
+In the client-side, it's almost always good to set the `content-type` header to `application/x-www-form-urlencoded`.
+So that's what Abrest does.
+
+If you don't want that header to be sent, all you have to do is override it by giving a new default `content-type` header or by giving a new header in the actual request.
