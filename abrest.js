@@ -1,17 +1,16 @@
-(function (scope, euc) {
+(function (scope, euc, hasOwnProperty) {
     var Abrest = function (baseURL, defaultHeaders, defaultData, timeout) {
             this.baseURL = baseURL || ''
             this.timeout = timeout || 1000
             this.defaultHeaders = defaultHeaders || {}
             this.defaultData = defaultData || {}
-
-            return this
         },
         noop = function () {},
         methods = ['get', 'post', 'put', 'delete']
 
     Abrest.prototype.ajax = function (method, url, data, headers, callback) {
         var xhr = new XMLHttpRequest(),
+            setReqHeader = xhr.setRequestHeader,
             timeout = this.timeout,
             combineObjs = this.combineObjs,
             timer
@@ -27,10 +26,10 @@
 
         xhr.open(method, url)
         // This is just a default header
-        xhr.setRequestHeader('content-type', 'application/x-www-form-urlencoded')
+        setReqHeader('content-type', 'application/x-www-form-urlencoded')
         for (var header in headers) {
-            if (headers.hasOwnProperty(header)) {
-                xhr.setRequestHeader(header, headers[header])
+            if (headers[hasOwnProperty](header)) {
+                setReqHeader(header, headers[header])
             }
         }
 
@@ -42,15 +41,14 @@
         }
 
         xhr.onreadystatechange = function () {
+            var status = xhr.status
+
             if (timeout) {
                 clearTimeout(timer)
             }
             if (xhr.readyState === 4) {
-                if (!xhr.status) {
-                    callback(new Error('No Status'))
-                }
-                else if ((xhr.status < 200 || xhr.status >= 300) && xhr.status !== 304) {
-                    callback(new Error(xhr.status))
+                if ((status < 200 || status >= 300) && status !== 304) {
+                    callback(new Error(status))
                 }
                 else {
                     callback(null, xhr.responseText)
@@ -65,7 +63,7 @@
 
     Abrest.prototype.combineObjs = function (defaults, overrides) {
         for (var j in defaults) {
-            if (defaults.hasOwnProperty(j) && typeof overrides[h=j] === 'undefined') {
+            if (defaults[hasOwnProperty](j) && !overrides[j]) {
                 overrides[j] = defaults[j]
             }
         }
@@ -81,11 +79,11 @@
         }
         else {
             for (var k in data) {
-                if (data.hasOwnProperty(k)) {
+                if (data[hasOwnProperty](k)) {
                     result += '&' + euc(k) + '=' + euc(data[k])
                 }
             }
-            return result.length === 0 ? '' : result.substr(1)
+            return result === '' ? '' : result.substr(1)
         }
     }
 
@@ -118,7 +116,7 @@
     // OK, now Abrest is done. Time to attach it!
     // If there is an AMD module system here, use it.
     // Otherwise, add it to the 'this' variable (which is probably 'window')
-    if (typeof define === 'function' && define.amd) {
+    if (typeof define === 'function') {
         define(function () {
             return Abrest
         })
@@ -126,4 +124,4 @@
     else {
         scope.Abrest = Abrest
     }
-}(this, encodeURIComponent))
+}(this, encodeURIComponent, 'hasOwnProperty'))
