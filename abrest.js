@@ -64,7 +64,7 @@
     }
 
     Abrest.prototype.combineObjs = function (defaults, overrides) {
-        for (var i in this.defaultData) {
+        for (var i in defaults) {
             if (defaults.hasOwnProperty(i) && typeof overrides[i] === 'undefined') {
                 overrides[i] = defaults[i]
             }
