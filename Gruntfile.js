@@ -23,7 +23,7 @@ module.exports = function(grunt) {
         },
         mocha_phantomjs: {
             options: {
-                reporter: 'progress'
+                reporter: 'spec'
             },
             all: 'test/index.html'
         },
@@ -32,7 +32,7 @@ module.exports = function(grunt) {
                 src: 'test/node/init.js',
                 options: {
                     ui: 'bdd',
-                    reporter: 'progress',
+                    reporter: 'spec',
                     require: [
                         'chai'
                     ],
