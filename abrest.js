@@ -11,7 +11,6 @@
         methods = ['get', 'post', 'put', 'delete']
 
     Abrest.prototype.ajax = function (method, url, data, headers, callback) {
-        console.log(Array.prototype.slice.call(arguments))
         var xhr = new XMLHttpRequest(),
             timeout = this.timeout,
             combineObjs = this.combineObjs,
