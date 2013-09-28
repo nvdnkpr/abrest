@@ -9,9 +9,11 @@
 
             return api
         },
-        noop = function () {}
+        noop = function () {},
+        methods = ['get', 'post', 'put', 'delete']
 
     Abrest.prototype.ajax = function (method, url, data, headers, callback) {
+        console.log(Array.prototype.slice.call(arguments))
         var xhr = new XMLHttpRequest(),
             timeout = this.timeout,
             combineObjs = this.combineObjs,
@@ -21,9 +23,8 @@
         headers = combineObjs(this.defaultHeaders, headers)
 
         url = this.baseURL + url
-        callback = callback || noop
 
-        if (method === 'GET' && data) {
+        if (method === 'get' && data) {
             url += '?' + data
         }
 
@@ -60,15 +61,15 @@
             }
         }
 
-        if (method !== 'GET' && data) {
+        if (method !== 'get' && data) {
             xhr.send(data)
         }
     }
 
     Abrest.prototype.combineObjs = function (defaults, overrides) {
-        for (var i in defaults) {
-            if (defaults.hasOwnProperty(i) && typeof overrides[i] === 'undefined') {
-                overrides[i] = defaults[i]
+        for (var j in defaults) {
+            if (defaults.hasOwnProperty(j) && typeof overrides[h=j] === 'undefined') {
+                overrides[j] = defaults[j]
             }
         }
 
@@ -89,6 +90,32 @@
             }
             return result.length === 0 ? '' : result.substr(1)
         }
+    }
+
+    for (var i = 0; i < methods.length; i += 1) {
+        (function (method) {
+            Abrest.prototype[method] = function (url, data, headers, callback) {
+                if (typeof data === 'function') {
+                    callback = data
+                    data = {}
+                    headers = {}
+                }
+                else if (typeof headers === 'function') {
+                    callback = headers
+                    headers = {}
+                }
+                else if (typeof data === 'undefined') {
+                    data = {}
+                    headers = {}
+                    callback = noop
+                }
+                else if (typeof headers === 'undefined') {
+                    headers = {}
+                    callback = noop
+                }
+                this.ajax.call(this, method, url, data, headers, callback)
+            }
+        }(methods[i]))
     }
 
     // OK, now Abrest is done. Time to attach it!
