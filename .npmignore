@@ -7,3 +7,9 @@ bower.json
 node_modules
 npm-debug.log
 .travis.yml
+test/behavior.js
+test/combine-objs.js
+test/encode.js
+test/index.html
+test/intro.js
+test/outro.js
