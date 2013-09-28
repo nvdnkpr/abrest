@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href='https://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
+
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <title>Abrest by jamescostian</title>
+  </head>
+
+  <body>
+    <header>
+      <div class="inner">
+        <h1>Abrest</h1>
+        <h2>Abstraction for dealing with RESTful services so your can always be abreast.</h2>
+        <a href="https://github.com/jamescostian/abrest" class="button"><small>View project on</small>GitHub</a>
+      </div>
+    </header>
+
+    <div id="content-wrapper">
+      <div class="inner clearfix">
+        <section id="main-content">
+          <h1>
+<a name="abrest--" class="anchor" href="#abrest--"><span class="octicon octicon-link"></span></a>Abrest <a href="https://travis-ci.org/jamescostian/abrest"><img src="https://secure.travis-ci.org/jamescostian/abrest.png?branch=master" alt="Build Status"></a> <a href="https://gemnasium.com/jamescostian/abrest"><img src="https://gemnasium.com/jamescostian/abrest.png" alt="Dependency Status"></a>
+</h1>
+
+<p><strong>Ab</strong>straction for dealing with <strong>REST</strong>ful services so your can always be <em>abreast</em>.</p>
+
+<p>Abrest works on both the client and the server side (assuming your server side is running Node.JS). If you have any AMD setup (e.g. RequireJS or Almond), Abrest will use that. Otherwise, Abrest will just attach itself to the <code>this</code> variable (which is usually going to be <code>window</code>).</p>
+
+<h2>
+<a name="installation" class="anchor" href="#installation"><span class="octicon octicon-link"></span></a>Installation</h2>
+
+<p>To install Abrest for your client side, you can run <code>bower install abrest</code> and to install it for your server-side (assuming you're using Node.JS) you can run <code>npm install abrest</code></p>
+
+<h2>
+<a name="api" class="anchor" href="#api"><span class="octicon octicon-link"></span></a>API</h2>
+
+<div class="highlight highlight-javascript"><pre><span class="c1">// Creates an instance of Abrest in the variable 'user' and sets '/api' is the</span>
+<span class="c1">// base URL. In addition, {id: 5379} will be set as the default data that will</span>
+<span class="c1">// always be sent unless it is overriden. Also, {'user-agent': 'abrest'} is set</span>
+<span class="c1">// as the default header that will be sent unless it is overriden.</span>
+<span class="kd">var</span> <span class="nx">user</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Abrest</span><span class="p">(</span><span class="s1">'/api/'</span><span class="p">,</span> <span class="p">{</span><span class="nx">id</span><span class="o">:</span> <span class="mi">5379</span><span class="p">},</span> <span class="p">{</span><span class="s1">'user-agent'</span><span class="o">:</span> <span class="s1">'abrest'</span><span class="p">})</span>
+
+<span class="c1">// Sends a GET request from the 'user' instance of Abrest. The URL that it will</span>
+<span class="c1">// get is '/api/name' (because '/api/' is the base URL for the 'user' instance)</span>
+<span class="c1">// and all of the default headers will be sent, none of which will be overriden</span>
+<span class="nx">user</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">'name'</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">error</span><span class="p">,</span> <span class="nx">result</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">error</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">throw</span> <span class="nx">error</span>
+    <span class="p">}</span>
+    <span class="k">else</span> <span class="p">{</span>
+        <span class="c1">// result (should) be the user's name</span>
+    <span class="p">}</span>
+<span class="p">})</span>
+
+<span class="c1">// Sends a POST request from the 'user' instance of Abrest. The URL that it</span>
+<span class="c1">// will get is '/api/favorite_color' and the data that it will send will be</span>
+<span class="c1">// a combination of the default data and {foo: 'bar'}. Also, because there</span>
+<span class="c1">// aren't any headers here, the default ones will be used.</span>
+<span class="nx">user</span><span class="p">.</span><span class="k">delete</span><span class="p">(</span><span class="s1">'favorite_color'</span><span class="p">,</span> <span class="p">{</span><span class="nx">foo</span><span class="o">:</span> <span class="s1">'bar'</span><span class="p">},</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">error</span><span class="p">,</span> <span class="nx">result</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">error</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">throw</span> <span class="nx">error</span>
+    <span class="p">}</span>
+    <span class="k">else</span> <span class="p">{</span>
+        <span class="c1">// restult (should) be the user's favorite color</span>
+    <span class="p">}</span>
+<span class="p">})</span>
+<span class="c1">// And also Abrest (should) support POST and PUT</span>
+</pre></div>
+
+<h2>
+<a name="advanced-options" class="anchor" href="#advanced-options"><span class="octicon octicon-link"></span></a>Advanced Options</h2>
+
+<p>When you create an instance of Abrest, you can modify some of that instance's properties. Here's an example:</p>
+
+<div class="highlight highlight-javascript"><pre><span class="kd">var</span> <span class="nx">user</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Abrest</span><span class="p">()</span> <span class="c1">// Creates a new instance of Abrest</span>
+
+<span class="c1">// Sets the request timeout to 0, which means that it will never timeout.</span>
+<span class="c1">// The default timeout is 1000 (which is 1 second).</span>
+<span class="nx">user</span><span class="p">.</span><span class="nx">timeout</span> <span class="o">=</span> <span class="mi">0</span>
+
+<span class="c1">// Sets the default headers to {foo: 'bar'}. So, if a request is sent without</span>
+<span class="c1">// any headers, then Abrest will still send the header 'foo: bar'. In order to</span>
+<span class="c1">// override this header, one must send a request with a header that</span>
+<span class="c1">// specifically sets 'foo' to something else.</span>
+<span class="nx">user</span><span class="p">.</span><span class="nx">defaultHeaders</span> <span class="o">=</span> <span class="p">{</span><span class="nx">foo</span><span class="o">:</span> <span class="s1">'bar'</span><span class="p">}</span>
+
+<span class="c1">// Sets the default data to {foo: 'bar'}. So, if a request is sent without</span>
+<span class="c1">// any data, then Abrest will still send the data 'foo=bar'. In order to</span>
+<span class="c1">// override this data, one must send a request with a data that specifically</span>
+<span class="c1">// sets 'foo' to something else.</span>
+<span class="nx">user</span><span class="p">.</span><span class="nx">defaultData</span> <span class="o">=</span> <span class="p">{</span><span class="nx">foo</span><span class="o">:</span> <span class="s1">'bar'</span><span class="p">}</span>
+</pre></div>
+
+<h2>
+<a name="side-note-for-client-side" class="anchor" href="#side-note-for-client-side"><span class="octicon octicon-link"></span></a>Side Note for Client-Side</h2>
+
+<p>In the client-side, it's almost always good to set the <code>content-type</code> header to <code>application/x-www-form-urlencoded</code>.
+So that's what Abrest does.</p>
+
+<p>If you don't want that header to be sent, all you have to do is override it by giving a new default <code>content-type</code> header or by giving a new header in the actual request.</p>
+        </section>
+
+        <aside id="sidebar">
+          <a href="https://github.com/jamescostian/abrest/zipball/master" class="button">
+            <small>Download</small>
+            .zip file
+          </a>
+          <a href="https://github.com/jamescostian/abrest/tarball/master" class="button">
+            <small>Download</small>
+            .tar.gz file
+          </a>
+
+          <p class="repo-owner"><a href="https://github.com/jamescostian/abrest"></a> is maintained by <a href="https://github.com/jamescostian">jamescostian</a>.</p>
+
+          <p>This page was generated by <a href="pages.github.com">GitHub Pages</a> using the Architect theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.</p>
+        </aside>
+      </div>
+    </div>
+
+  
+  </body>
+</html>
