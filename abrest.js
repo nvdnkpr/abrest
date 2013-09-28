@@ -1,13 +1,11 @@
 (function (scope, euc) {
     var Abrest = function (baseURL, defaultHeaders, defaultData, timeout) {
-            var api = this
+            this.baseURL = baseURL || ''
+            this.timeout = timeout || 1000
+            this.defaultHeaders = defaultHeaders || {}
+            this.defaultData = defaultData || {}
 
-            api.baseURL = baseURL || ''
-            api.timeout = timeout || 1000
-            api.defaultHeaders = defaultHeaders || {}
-            api.defaultData = defaultData || {}
-
-            return api
+            return this
         },
         noop = function () {},
         methods = ['get', 'post', 'put', 'delete']
