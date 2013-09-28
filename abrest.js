@@ -85,7 +85,7 @@
                     result += '&' + encodeURIComponent(k) + '=' + encodeURIComponent(data[k])
                 }
             }
-            return result
+            return result.length === 0 ? '' : result.substr(1)
         }
     }
 
