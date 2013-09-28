@@ -1,6 +1,6 @@
 {
     "name": "abrest",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "main": "abrest.min.js",
     "ignore": [
         "node_modules",
