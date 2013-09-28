@@ -12,7 +12,7 @@ module.exports = function(grunt) {
                 report: 'gzip',
                 preserveComments: false,
                 mangle: {
-                    except: ['window', 'document']
+                    except: ['window']
                 },
             },
             build: {
@@ -26,13 +26,26 @@ module.exports = function(grunt) {
                 reporter: 'progress'
             },
             all: 'test/index.html'
-        }
+        },
+        cafemocha: {
+            se2e: {
+                src: 'test/node/init.js',
+                options: {
+                    ui: 'bdd',
+                    reporter: 'progress',
+                    require: [
+                        'chai'
+                    ],
+                },
+            },
+        },
     })
 
     grunt.loadNpmTasks('grunt-contrib-jshint')
     grunt.loadNpmTasks('grunt-contrib-uglify')
     grunt.loadNpmTasks('grunt-mocha-phantomjs')
-    grunt.registerTask('test', ['jshint', 'mocha_phantomjs'])
+    grunt.loadNpmTasks('grunt-cafe-mocha')
+    grunt.registerTask('test', ['jshint', 'mocha_phantomjs', 'cafemocha'])
     grunt.registerTask('build', 'uglify')
     grunt.registerTask('default', ['test', 'build'])
 }
