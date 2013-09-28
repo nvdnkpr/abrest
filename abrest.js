@@ -13,6 +13,7 @@
 
     Abrest.prototype.ajax = function (method, url, data, headers, callback) {
         var xhr = new XMLHttpRequest(),
+            timeout = this.timeout,
             timer
 
         data = this.encode(this.combineObjs(this.defaultData, data))
@@ -34,15 +35,15 @@
             }
         }
 
-        if (this.timeout) {
+        if (timeout) {
             timer = setTimeout(function () {
                 xhr.abort()
                 callback(new Error('Timeout'))
-            }, this.timeout)
+            }, timeout)
         }
 
         xhr.onreadystatechange = function () {
-            if (this.timeout) {
+            if (timeout) {
                 clearTimeout(timer)
             }
             if (xhr.readyState === 4) {
