@@ -10,7 +10,6 @@
 
     Abrest.prototype.ajax = function (method, url, data, headers, callback) {
         var xhr = new XMLHttpRequest(),
-            setReqHeader = xhr.setRequestHeader,
             timeout = this.timeout,
             combineObjs = this.combineObjs,
             timer
@@ -26,10 +25,10 @@
 
         xhr.open(method, url)
         // This is just a default header
-        setReqHeader('content-type', 'application/x-www-form-urlencoded')
+        xhr.setRequestHeader('content-type', 'application/x-www-form-urlencoded')
         for (var header in headers) {
             if (headers[hasOwnProperty](header)) {
-                setReqHeader(header, headers[header])
+                xhr.setRequestHeader(header, headers[header])
             }
         }
 
@@ -58,6 +57,9 @@
 
         if (method !== 'get' && data) {
             xhr.send(data)
+        }
+        else {
+            xhr.send();
         }
     }
 
